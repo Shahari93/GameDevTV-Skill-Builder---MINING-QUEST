@@ -24,8 +24,8 @@ public class GenerateEnvironment : MonoBehaviour
     void Start()
     {
         GenerateFloor();
-        SpawnFood();
         SpawnEnemies();
+        SpawnFood();
     }
 
     private void GenerateFloor()
