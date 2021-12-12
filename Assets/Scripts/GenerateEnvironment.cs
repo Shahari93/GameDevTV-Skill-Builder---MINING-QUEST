@@ -18,12 +18,13 @@ public class GenerateEnvironment : MonoBehaviour
     [SerializeField] private GameObject enemyPrefab;
 
     private int exitLocation;
+    private Vector2 rockPos;
 
 
     void Start()
     {
         GenerateFloor();
-        SpawnExit();
+        SpawnFood();
         SpawnEnemies();
     }
 
@@ -34,6 +35,7 @@ public class GenerateEnvironment : MonoBehaviour
             for (int y = 0; y < 20; y++)
             {
                 InstantiateFloorTile(x, y);
+                SpawnRocks();
             }
         }
     }
@@ -43,7 +45,29 @@ public class GenerateEnvironment : MonoBehaviour
         GameObject newFloorTile = Instantiate(groundTilePrefab, new Vector2(x, y), Quaternion.identity);
         newFloorTile.GetComponent<SpriteRenderer>().sprite = groundSprites[Random.Range(0, groundSprites.Length)];
     }
-    
+
+    private void SpawnRocks()
+    {
+        rockPos = new Vector2(Random.Range(1, 20), Random.Range(1, 20));
+        GameObject newRock = Instantiate(rockTilePrefab, new Vector2(rockPos.x, rockPos.y), Quaternion.identity);
+        newRock.GetComponent<SpriteRenderer>().sprite = rockSprites[Random.Range(0, rockSprites.Length)];
+    }
+
+    private void SpawnFood()
+    {
+        for (int i = 0; i < rockPos.x; i++)
+        {
+            if (i == rockPos.x && i == rockPos.y)
+            {
+                return;
+            }
+            else
+            {
+                GameObject newFood = Instantiate(foodPrefab, new Vector2(Random.Range(1, 20), Random.Range(1, 20)), Quaternion.identity);
+                newFood.GetComponent<SpriteRenderer>().sprite = foodSprites[Random.Range(0, foodSprites.Length)];
+            }
+        }
+    }
 
     private void SpawnExit()
     {
